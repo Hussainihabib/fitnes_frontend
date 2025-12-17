@@ -128,23 +128,18 @@ export default function Profile() {
           </Typography>
 
           <Box sx={{ textAlign: "center", mb: 3 }}>
-            <Avatar
-              src={
-                imagePreview ||
-                (user?.profilePicture
-                  ? `${base}/${user.profilePicture}`
-                      .replace(/\/{2,}/g, "/")
-                      .replace(":/", "://")
-                  : "")
-              }
-              sx={{
-                width: 120,
-                height: 120,
-                margin: "auto",
-                mb: 2,
-                border: `4px solid ${theme.palette.primary.main}`,
-              }}
-            />
+<Avatar
+  src={
+    imagePreview || user?.profilePicture || "/default-avatar.png"
+  }
+  sx={{
+    width: 120,
+    height: 120,
+    margin: "auto",
+    mb: 2,
+    border: `4px solid ${theme.palette.primary.main}`,
+  }}
+/>
 
             <Button
               variant="contained"
