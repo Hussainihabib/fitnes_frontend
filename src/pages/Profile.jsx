@@ -21,14 +21,10 @@ import { useAuth } from "../context/AuthContext";
 
 export default function Profile() {
   const theme = useTheme();
-  const { user: authUser, updateUser } = useAuth(); // 🔹 Get updateUser
+  const { user: authUser, updateUser } = useAuth();
   const [user, setUser] = useState(authUser || {});
   const [imagePreview, setImagePreview] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
-
-  const base = api.defaults.baseURL
-    ? api.defaults.baseURL.replace(/\/api$/, "")
-    : "";
 
   useEffect(() => {
     if (authUser) setUser(authUser);
@@ -75,7 +71,7 @@ export default function Profile() {
       });
 
       setUser(res.data);
-      updateUser(res.data); 
+      updateUser(res.data); // update global auth context
       setImagePreview(null);
       setSelectedImage(null);
       alert("Profile Updated Successfully!");
@@ -128,18 +124,18 @@ export default function Profile() {
           </Typography>
 
           <Box sx={{ textAlign: "center", mb: 3 }}>
-<Avatar
-  src={
-    imagePreview || user?.profilePicture || "/default-avatar.png"
-  }
-  sx={{
-    width: 120,
-    height: 120,
-    margin: "auto",
-    mb: 2,
-    border: `4px solid ${theme.palette.primary.main}`,
-  }}
-/>
+            <Avatar
+              src={
+                imagePreview || user?.profilePicture || "/default-avatar.png"
+              }
+              sx={{
+                width: 120,
+                height: 120,
+                margin: "auto",
+                mb: 2,
+                border: `4px solid ${theme.palette.primary.main}`,
+              }}
+            />
 
             <Button
               variant="contained"

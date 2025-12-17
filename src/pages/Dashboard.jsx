@@ -234,17 +234,20 @@ export default function Dashboard() {
       >
         <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
           <Avatar
-            src={
-              user?.profilePicture
-                ? `${base}/${user.profilePicture}`.replace(/\/{2,}/g, "/").replace(":/", "://")
-                : ""
-            }
-            sx={{
-              width: 72,
-              height: 72,
-              border: `3px solid ${theme.palette.primary.main}`,
-            }}
-          />
+  src={
+    user?.profilePicture
+      ? user.profilePicture.startsWith("http")
+        ? user.profilePicture
+        : `${base}/${user.profilePicture}`.replace(/\/{2,}/g, "/").replace(":/", "://")
+      : "/default-avatar.png"
+  }
+  sx={{
+    width: 72,
+    height: 72,
+    border: `3px solid ${theme.palette.primary.main}`,
+  }}
+/>
+
           <Box>
             <Typography variant="h5" sx={{ fontWeight: 900 }}>
               Hello, {user?.name || "Fitness Enthusiast"}!
