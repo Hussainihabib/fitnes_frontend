@@ -37,22 +37,46 @@ export default function App() {
     <AuthProvider>
       <NotificationProvider>
         <Routes>
+
+          <Route path="/" element={<HomePage />} />
+
           <Route path="/" element={<Login />} />
 
           <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Register />} />
+
           <Route path="/register" element={<Register />} />
 
           <Route element={<ProtectedLayout />}>
+            <Route path="/" element={<Dashboard />} />
+
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/" element={<Workouts />} />
+
             <Route path="/workouts" element={<Workouts />} />
+            <Route path="/" element={<Nutrition />} />
+
             <Route path="/nutrition" element={<Nutrition />} />
+            <Route path="/" element={<Progress />} />
+
             <Route path="/progress" element={<Progress />} />
+            <Route path="/" element={<Reports />} />
+
             <Route path="/reports" element={<Reports />} />
+            <Route path="/" element={<SupportForm />} />
             
             <Route path="/supportForm" element={<SupportForm />} />
+            <Route path="/" element={<Profile />} />
 
             <Route path="/profile" element={<Profile />} />
+
+
+            <Route path="/" element={<Notifications />} />
+          
             <Route path="/notifications" element={<Notifications />} />
+
+            <Route path="/" element={<Settings />} />
+           
             <Route path="/settings" element={<Settings />} />
           </Route>
         </Routes>
