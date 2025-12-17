@@ -79,6 +79,13 @@ theme.palette.mode === "light"
 : "0px 8px 22px rgba(0,0,0,0.45)",
 }}
 > <CardContent>
+  <Typography
+variant="h6"
+textAlign="center"
+mb={3}
+sx={{ fontWeight: "bold", color: theme.palette.primary.main }}
+>
+FitTrack </Typography>
 <Typography
 variant="h4"
 textAlign="center"
@@ -86,6 +93,12 @@ mb={3}
 sx={{ fontWeight: "bold", color: theme.palette.primary.main }}
 >
 Login Form </Typography>
+<Typography
+        textAlign="center"
+        sx={{ color: theme.palette.text.secondary, mb: 3 }}
+      >
+      Welcom Back and start your fitness journey!
+      </Typography>
 
 
       {error && (

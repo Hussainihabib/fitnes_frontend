@@ -122,6 +122,14 @@ boxShadow: theme.palette.mode === "light"
 : "0 8px 25px rgba(0,0,0,0.45)",
 }}
 > <CardContent>
+    <Typography
+variant="h6"
+textAlign="center"
+mb={3}
+sx={{ fontWeight: "bold", color: theme.palette.primary.main }}
+>
+FitTrack </Typography>
+
 <Typography
 variant="h4"
 fontWeight="bold"
