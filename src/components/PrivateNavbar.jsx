@@ -41,12 +41,11 @@ import {
   GRADIENT_PRIMARY,
 } from "../context/ThemeContext";
 
-
 const drawerWidth = 272;
-
 
 export default function PrivateNavbar() {
   const navigate = useNavigate();
+
   const location = useLocation();
 
   const { logout, user } = useAuth();
@@ -60,7 +59,6 @@ export default function PrivateNavbar() {
   );
 
   const [open, setOpen] = useState(false);
-
 
   const items = [
     [
@@ -106,46 +104,93 @@ export default function PrivateNavbar() {
     ],
   ];
 
+  const handleNavigate = (path) => {
+    navigate(path);
+
+    if (mobile) {
+      setOpen(false);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      setOpen(false);
+
+      await logout();
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  };
 
   const sidebar = (
     <Box
       sx={{
         height: "100%",
-        minHeight: "100vh",
+        width: "100%",
+
         display: "flex",
+
         flexDirection: "column",
 
         p: 2,
 
         overflowY: "auto",
 
+        overflowX: "hidden",
+
         background:
           mode === "dark"
             ? "linear-gradient(180deg, #0d1422 0%, #080d16 100%)"
             : "#ffffff",
+
+        scrollbarWidth: "thin",
+
+        "&::-webkit-scrollbar": {
+          width: 6,
+        },
+
+        "&::-webkit-scrollbar-thumb": {
+          background:
+            mode === "dark"
+              ? "rgba(255,255,255,0.12)"
+              : "rgba(0,0,0,0.12)",
+
+          borderRadius: 10,
+        },
       }}
     >
+      {/* ================= LOGO ================= */}
 
-      {/* Logo */}
       <Box
-        onClick={() => navigate("/dashboard")}
+        onClick={() => handleNavigate("/dashboard")}
         sx={{
           display: "flex",
+
           alignItems: "center",
+
           gap: 1.4,
 
           px: 1,
+
           py: 1.2,
 
           mb: 2,
 
           cursor: "pointer",
+
+          flexShrink: 0,
+
+          transition: "transform 0.2s ease",
+
+          "&:hover": {
+            transform: "translateX(2px)",
+          },
         }}
       >
-
         <Box
           sx={{
             width: 44,
+
             height: 44,
 
             borderRadius: 3,
@@ -153,6 +198,7 @@ export default function PrivateNavbar() {
             background: GRADIENT_PRIMARY,
 
             display: "grid",
+
             placeItems: "center",
 
             fontWeight: 900,
@@ -160,18 +206,30 @@ export default function PrivateNavbar() {
             color: "#031510",
 
             fontSize: 20,
+
+            flexShrink: 0,
+
+            boxShadow:
+              "0 8px 22px rgba(16,185,129,0.22)",
           }}
         >
           F
         </Box>
 
-
-        <Box>
+        <Box
+          sx={{
+            minWidth: 0,
+          }}
+        >
           <Typography
             sx={{
               fontWeight: 900,
+
               fontSize: 20,
+
               lineHeight: 1.1,
+
+              whiteSpace: "nowrap",
             }}
           >
             FitTrack
@@ -180,36 +238,45 @@ export default function PrivateNavbar() {
           <Typography
             variant="caption"
             color="text.secondary"
+            sx={{
+              whiteSpace: "nowrap",
+            }}
           >
             Fitness companion
           </Typography>
         </Box>
-
       </Box>
 
+      {/* ================= MENU LABEL ================= */}
 
-      {/* Menu Label */}
       <Typography
         variant="overline"
         sx={{
           px: 1.5,
+
           color: "text.secondary",
+
           fontWeight: 800,
+
           letterSpacing: 1.3,
+
+          flexShrink: 0,
         }}
       >
         MENU
       </Typography>
 
+      {/* ================= NAVIGATION ================= */}
 
-      {/* Navigation */}
       <List
         sx={{
           mt: 1,
+
           p: 0,
+
+          flexShrink: 0,
         }}
       >
-
         {items.map(([label, path, icon]) => {
           const active =
             location.pathname === path;
@@ -217,12 +284,7 @@ export default function PrivateNavbar() {
           return (
             <ListItemButton
               key={path}
-
-              onClick={() => {
-                navigate(path);
-                setOpen(false);
-              }}
-
+              onClick={() => handleNavigate(path)}
               sx={{
                 mb: 0.7,
 
@@ -255,7 +317,6 @@ export default function PrivateNavbar() {
                 },
               }}
             >
-
               <ListItemIcon
                 sx={{
                   minWidth: 42,
@@ -268,177 +329,234 @@ export default function PrivateNavbar() {
                 {icon}
               </ListItemIcon>
 
-
               <ListItemText
                 primary={label}
-
                 primaryTypographyProps={{
                   fontWeight: active
                     ? 800
                     : 600,
                 }}
               />
-
             </ListItemButton>
           );
         })}
-
       </List>
 
+      {/* ================= BOTTOM SECTION ================= */}
 
-      {/* Bottom Section */}
       <Box
         sx={{
           mt: "auto",
+
+          pt: 2,
+
+          flexShrink: 0,
         }}
       >
-
         <Divider
           sx={{
             mb: 1.5,
           }}
         />
 
+        {/* ================= SETTINGS ================= */}
 
-        {/* Settings */}
         <ListItemButton
           onClick={() =>
-            navigate("/settings")
+            handleNavigate("/settings")
           }
-
           sx={{
             borderRadius: 3,
+
             mb: 0.7,
+
+            color:
+              location.pathname === "/settings"
+                ? "#04140f"
+                : "text.primary",
+
+            background:
+              location.pathname === "/settings"
+                ? GRADIENT_PRIMARY
+                : "transparent",
+
+            transition: "all 0.2s ease",
+
+            "&:hover": {
+              background:
+                location.pathname === "/settings"
+                  ? GRADIENT_PRIMARY
+                  : "rgba(16,185,129,.10)",
+
+              transform:
+                "translateX(3px)",
+            },
           }}
         >
-
           <ListItemIcon
             sx={{
               minWidth: 42,
+
+              color:
+                location.pathname === "/settings"
+                  ? "#04140f"
+                  : ACCENT,
             }}
           >
-            <SettingsRoundedIcon
-              color="primary"
-            />
+            <SettingsRoundedIcon />
           </ListItemIcon>
-
 
           <ListItemText
             primary="Settings"
-
             primaryTypographyProps={{
-              fontWeight: 600,
+              fontWeight:
+                location.pathname === "/settings"
+                  ? 800
+                  : 600,
             }}
           />
-
         </ListItemButton>
 
+        {/* ================= LOGOUT ================= */}
 
-        {/* Logout */}
         <ListItemButton
-          onClick={logout}
-
+          onClick={handleLogout}
           sx={{
             borderRadius: 3,
+
             color: "#fb7185",
+
+            transition: "all 0.2s ease",
+
+            "&:hover": {
+              background:
+                "rgba(251,113,133,0.10)",
+
+              transform:
+                "translateX(3px)",
+            },
           }}
         >
-
           <ListItemIcon
             sx={{
               minWidth: 42,
+
               color: "#fb7185",
             }}
           >
             <LogoutRoundedIcon />
           </ListItemIcon>
 
-
           <ListItemText
             primary="Logout"
-
             primaryTypographyProps={{
               fontWeight: 700,
             }}
           />
-
         </ListItemButton>
-
       </Box>
-
     </Box>
   );
 
-
   return (
     <>
-
-      {/* ================= MOBILE HEADER ================= */}
+      {/* ========================================= */}
+      {/* MOBILE HEADER */}
+      {/* ========================================= */}
 
       {mobile && (
         <Box
           sx={{
             height: 68,
 
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
+            width: "100%",
 
-            px: 2,
+            display: "flex",
+
+            alignItems: "center",
+
+            justifyContent:
+              "space-between",
+
+            px: {
+              xs: 1.5,
+              sm: 2,
+            },
 
             position: "sticky",
+
             top: 0,
 
-            zIndex: 1100,
+            zIndex: 1200,
 
             backdropFilter:
               "blur(18px)",
 
             background:
               mode === "dark"
-                ? "rgba(8,13,22,.82)"
-                : "rgba(255,255,255,.86)",
+                ? "rgba(8,13,22,.90)"
+                : "rgba(255,255,255,.92)",
 
-            borderBottom: "1px solid",
+            borderBottom:
+              "1px solid",
 
             borderColor: "divider",
+
+            boxSizing: "border-box",
           }}
         >
+          {/* MENU BUTTON */}
 
           <IconButton
-            onClick={() =>
-              setOpen(true)
-            }
+            onClick={() => setOpen(true)}
+            aria-label="Open navigation menu"
           >
             <MenuRoundedIcon />
           </IconButton>
 
+          {/* LOGO */}
 
           <Typography
             fontWeight={900}
+            sx={{
+              fontSize: {
+                xs: 18,
+                sm: 20,
+              },
+            }}
           >
             FitTrack
           </Typography>
 
+          {/* ACTIONS */}
 
-          <Box>
+          <Box
+            sx={{
+              display: "flex",
 
+              alignItems: "center",
+            }}
+          >
             <Tooltip title="Theme">
               <IconButton
                 onClick={toggleMode}
+                aria-label="Toggle theme"
               >
-                {mode === "dark"
-                  ? <LightModeRoundedIcon />
-                  : <DarkModeRoundedIcon />
-                }
+                {mode === "dark" ? (
+                  <LightModeRoundedIcon />
+                ) : (
+                  <DarkModeRoundedIcon />
+                )}
               </IconButton>
             </Tooltip>
 
-
             <IconButton
               onClick={() =>
-                navigate("/notifications")
+                handleNavigate(
+                  "/notifications"
+                )
               }
+              aria-label="Notifications"
             >
               <Badge
                 color="error"
@@ -447,19 +565,17 @@ export default function PrivateNavbar() {
                 <NotificationsRoundedIcon />
               </Badge>
             </IconButton>
-
           </Box>
-
         </Box>
       )}
 
-
-      {/* ================= DESKTOP SIDEBAR ================= */}
+      {/* ========================================= */}
+      {/* DESKTOP FIXED SIDEBAR */}
+      {/* ========================================= */}
 
       {!mobile && (
         <Drawer
           variant="permanent"
-
           sx={{
             width: drawerWidth,
 
@@ -475,11 +591,19 @@ export default function PrivateNavbar() {
               borderRight:
                 "1px solid",
 
-              borderColor:
-                "divider",
+              borderColor: "divider",
 
-              position: "relative",
+              position: "fixed",
+
+              left: 0,
+
+              top: 0,
+
               height: "100vh",
+
+              overflow: "hidden",
+
+              zIndex: 1200,
             },
           }}
         >
@@ -487,21 +611,30 @@ export default function PrivateNavbar() {
         </Drawer>
       )}
 
-
-      {/* ================= MOBILE DRAWER ================= */}
+      {/* ========================================= */}
+      {/* MOBILE DRAWER */}
+      {/* ========================================= */}
 
       {mobile && (
         <Drawer
           open={open}
-
-          onClose={() =>
-            setOpen(false)
-          }
-
+          onClose={() => setOpen(false)}
+          ModalProps={{
+            keepMounted: true,
+          }}
           sx={{
+            zIndex: 1400,
+
             "& .MuiDrawer-paper": {
               width: drawerWidth,
+
+              maxWidth: "86vw",
+
               border: 0,
+
+              height: "100vh",
+
+              overflow: "hidden",
             },
           }}
         >
@@ -509,8 +642,9 @@ export default function PrivateNavbar() {
         </Drawer>
       )}
 
-
-      {/* ================= DESKTOP ACTION BAR ================= */}
+      {/* ========================================= */}
+      {/* DESKTOP ACTION BAR */}
+      {/* ========================================= */}
 
       {!mobile && (
         <Box
@@ -518,23 +652,30 @@ export default function PrivateNavbar() {
             position: "fixed",
 
             top: 18,
-            right: 24,
 
-            zIndex: 1200,
+            right: {
+              md: 24,
+              lg: 32,
+            },
+
+            zIndex: 1300,
 
             display: "flex",
-            gap: 1,
+
+            gap: 0.8,
+
             alignItems: "center",
 
             px: 1,
+
             py: 0.5,
 
             borderRadius: 99,
 
             background:
               mode === "dark"
-                ? "rgba(18,24,38,.8)"
-                : "rgba(255,255,255,.86)",
+                ? "rgba(18,24,38,.86)"
+                : "rgba(255,255,255,.90)",
 
             backdropFilter:
               "blur(18px)",
@@ -544,51 +685,89 @@ export default function PrivateNavbar() {
 
             borderColor:
               "divider",
+
+            boxShadow:
+              mode === "dark"
+                ? "0 10px 30px rgba(0,0,0,.28)"
+                : "0 10px 30px rgba(15,23,42,.08)",
           }}
         >
+          {/* THEME */}
 
           <Tooltip title="Theme">
             <IconButton
               onClick={toggleMode}
+              aria-label="Toggle theme"
             >
-              {mode === "dark"
-                ? <LightModeRoundedIcon />
-                : <DarkModeRoundedIcon />
-              }
+              {mode === "dark" ? (
+                <LightModeRoundedIcon />
+              ) : (
+                <DarkModeRoundedIcon />
+              )}
             </IconButton>
           </Tooltip>
 
+          {/* NOTIFICATIONS */}
 
-          <IconButton
-            onClick={() =>
-              navigate("/notifications")
+          <Tooltip title="Notifications">
+            <IconButton
+              onClick={() =>
+                navigate(
+                  "/notifications"
+                )
+              }
+              aria-label="Notifications"
+            >
+              <Badge
+                color="error"
+                variant="dot"
+              >
+                <NotificationsRoundedIcon />
+              </Badge>
+            </IconButton>
+          </Tooltip>
+
+          {/* USER AVATAR */}
+
+          <Tooltip
+            title={
+              user?.name || "Profile"
             }
           >
-            <NotificationsRoundedIcon />
-          </IconButton>
+            <Avatar
+              onClick={() =>
+                navigate("/profile")
+              }
+              sx={{
+                width: 34,
 
+                height: 34,
 
-          <Avatar
-            sx={{
-              width: 32,
-              height: 32,
+                bgcolor: ACCENT,
 
-              bgcolor: ACCENT,
+                color: "#04140f",
 
-              color: "#04140f",
+                fontSize: 14,
 
-              fontSize: 14,
+                fontWeight: 900,
 
-              fontWeight: 900,
-            }}
-          >
-            {user?.name?.[0]?.toUpperCase() ||
-              "U"}
-          </Avatar>
+                cursor: "pointer",
 
+                transition:
+                  "transform 0.2s ease",
+
+                "&:hover": {
+                  transform:
+                    "scale(1.06)",
+                },
+              }}
+            >
+              {user?.name?.[0]?.toUpperCase() ||
+                "U"}
+            </Avatar>
+          </Tooltip>
         </Box>
       )}
-
     </>
   );
 }

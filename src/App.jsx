@@ -1,4 +1,5 @@
 import { Routes, Route, Outlet, Navigate } from "react-router-dom";
+
 import { Box } from "@mui/material";
 
 import AuthProvider from "./context/AuthContext";
@@ -7,6 +8,7 @@ import NotificationProvider from "./context/NotificationContext";
 import HomePage from "./pages/HomePage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+
 import Dashboard from "./pages/Dashboard";
 import Workouts from "./pages/Workouts";
 import Nutrition from "./pages/Nutrition";
@@ -20,36 +22,37 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import PrivateNavbar from "./components/PrivateNavbar";
 import SupportForm from "./components/supportForm";
 
+const drawerWidth = 272;
 
 const ProtectedLayout = () => {
   return (
     <ProtectedRoute>
       <Box
         sx={{
-          display: "flex",
-          flexDirection: {
-            xs: "column",
-            md: "row",
-          },
           minHeight: "100vh",
           width: "100%",
-          overflow: "hidden",
+          overflowX: "hidden",
         }}
       >
-        {/* Premium Sidebar */}
+        {/* ================= SIDEBAR / MOBILE HEADER ================= */}
         <PrivateNavbar />
 
-        {/* Main Page Content */}
+        {/* ================= MAIN CONTENT ================= */}
         <Box
           component="main"
           sx={{
-            flexGrow: 1,
-            minWidth: 0,
+            minHeight: "100vh",
             width: {
               xs: "100%",
-              md: "calc(100% - 280px)",
+              md: `calc(100% - ${drawerWidth}px)`,
+            },
+            ml: {
+              xs: 0,
+              md: `${drawerWidth}px`,
             },
             overflowX: "hidden",
+            overflowY: "visible",
+            transition: "margin 0.3s ease, width 0.3s ease",
           }}
         >
           <Outlet />
@@ -59,22 +62,22 @@ const ProtectedLayout = () => {
   );
 };
 
-
 export default function App() {
   return (
     <AuthProvider>
       <NotificationProvider>
         <Routes>
+          {/* ================= PUBLIC ROUTES ================= */}
 
-          {/* Public Routes */}
           <Route path="/" element={<HomePage />} />
+
           <Route path="/login" element={<Login />} />
+
           <Route path="/register" element={<Register />} />
 
+          {/* ================= PROTECTED APPLICATION ================= */}
 
-          {/* Protected Application Routes */}
           <Route element={<ProtectedLayout />}>
-
             <Route
               path="/dashboard"
               element={<Dashboard />}
@@ -119,16 +122,19 @@ export default function App() {
               path="/settings"
               element={<Settings />}
             />
-
           </Route>
 
+          {/* ================= FALLBACK ================= */}
 
-          {/* Fallback Route */}
           <Route
             path="*"
-            element={<Navigate to="/" replace />}
+            element={
+              <Navigate
+                to="/"
+                replace
+              />
+            }
           />
-
         </Routes>
       </NotificationProvider>
     </AuthProvider>
