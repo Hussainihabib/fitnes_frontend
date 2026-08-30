@@ -97,7 +97,7 @@ Login Form </Typography>
         textAlign="center"
         sx={{ color: theme.palette.text.secondary, mb: 3 }}
       >
-      Welcom Back and start your fitness journey!
+      Welcome Back and start your fitness journey!
       </Typography>
 
 
