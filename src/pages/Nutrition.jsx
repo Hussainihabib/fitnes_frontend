@@ -23,6 +23,7 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
+import RestaurantIcon from "@mui/icons-material/Restaurant";
 import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
 import { PieChart, Pie, Cell, ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
@@ -385,8 +386,29 @@ export default function Nutrition() {
 
                 {filteredMeals.length === 0 && (
                   <TableRow>
-                    <TableCell colSpan={7} align="center">
-                      No meals found.
+                    <TableCell colSpan={7} align="center" sx={{ py: 8, border: 0 }}>
+                      <Box
+                        sx={{
+                          width: 64,
+                          height: 64,
+                          borderRadius: "50%",
+                          mx: "auto",
+                          mb: 2,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          background: `${theme.palette.primary.main}1f`,
+                          boxShadow: `0 0 24px 4px ${theme.palette.primary.main}26`,
+                        }}
+                      >
+                        <RestaurantIcon sx={{ fontSize: 28, color: theme.palette.primary.main }} />
+                      </Box>
+                      <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
+                        No meals found
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Log a meal to start tracking your nutrition.
+                      </Typography>
                     </TableCell>
                   </TableRow>
                 )}

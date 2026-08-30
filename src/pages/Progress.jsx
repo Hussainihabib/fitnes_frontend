@@ -362,12 +362,14 @@ export default function Progress() {
               <Bar
                 dataKey="performance.runTime"
                 name="Run Time (min)"
-                fill="#03a9f4"
+                fill="#06b6d4"
+                radius={[6, 6, 0, 0]}
               />
               <Bar
                 dataKey="performance.maxLift"
                 name="Max Lift (kg)"
-                fill="#8bc34a"
+                fill="#10b981"
+                radius={[6, 6, 0, 0]}
               />
             </BarChart>
           </ResponsiveContainer>

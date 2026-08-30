@@ -20,9 +20,11 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
+import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 
 import { loadAlerts, createAlert, deleteAlert, updateAlert } from "../api/apiCalls";
 import { NotificationContext } from "../context/NotificationContext";
+import { ACCENT, ACCENT_SOFT } from "../context/ThemeContext";
 
 export default function Alerts() {
   const userId = localStorage.getItem("userId");
@@ -224,7 +226,30 @@ fetchNotifications();
       <Typography variant="h6" mb={2}>Saved Reminders ({list.length})</Typography>
       <List component={Card}>
         {list.length === 0 ? (
-          <CardContent><Typography>No reminders found.</Typography></CardContent>
+          <CardContent sx={{ textAlign: "center", py: 6 }}>
+            <Box
+              sx={{
+                width: 64,
+                height: 64,
+                borderRadius: "50%",
+                mx: "auto",
+                mb: 2,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: ACCENT_SOFT,
+                boxShadow: `0 0 24px 4px rgba(16,185,129,0.15)`,
+              }}
+            >
+              <NotificationsActiveIcon sx={{ fontSize: 28, color: ACCENT }} />
+            </Box>
+            <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
+              No reminders yet
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Create a reminder above to get notified for your next session.
+            </Typography>
+          </CardContent>
         ) : (
           list.map(r => (
             <ListItem key={r._id} divider>

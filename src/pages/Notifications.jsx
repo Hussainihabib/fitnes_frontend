@@ -21,6 +21,7 @@ import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import MarkEmailReadIcon from "@mui/icons-material/MarkEmailRead";
 import MarkEmailUnreadIcon from "@mui/icons-material/MarkEmailUnread";
+import { ACCENT, ACCENT_SOFT } from "../context/ThemeContext";
 
 const getTypeStyles = (type) => {
   const t = type?.toLowerCase() || "";
@@ -74,11 +75,27 @@ export default function Notifications() {
 
       <Paper elevation={8} sx={{ p: 0, borderRadius: 3, overflow: 'hidden' }}>
         {notifications.length === 0 ? (
-          <Box sx={{ p: 5, textAlign: "center", bgcolor: 'primary.light', color: 'primary.dark' }}>
-            <Typography variant="h5" sx={{ fontWeight: 600 }} gutterBottom>
-              ✨ You're all caught up!
+          <Box sx={{ p: 6, textAlign: "center" }}>
+            <Box
+              sx={{
+                width: 72,
+                height: 72,
+                borderRadius: "50%",
+                mx: "auto",
+                mb: 2.5,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: ACCENT_SOFT,
+                boxShadow: `0 0 30px 4px rgba(16,185,129,0.15)`,
+              }}
+            >
+              <NotificationsActiveIcon sx={{ fontSize: 32, color: ACCENT }} />
+            </Box>
+            <Typography variant="h6" sx={{ fontWeight: 700 }} gutterBottom>
+              You're all caught up!
             </Typography>
-            <Typography variant="body1">
+            <Typography variant="body2" color="text.secondary">
               No new activities or alerts in your feed.
             </Typography>
           </Box>
@@ -89,7 +106,7 @@ export default function Notifications() {
               const isRead = !!n.read;
               const { icon, color, label } = getTypeStyles(n.type);
               const isLast = index === sortedNotifications.length - 1;
-              const listItemBg = isRead ? 'white' : 'action.selected';
+              const listItemBg = isRead ? "transparent" : "action.selected";
 
               return (
                 <React.Fragment key={notificationId}>

@@ -89,8 +89,8 @@ export default function Profile() {
         py: 6,
         background:
           theme.palette.mode === "light"
-            ? "linear-gradient(135deg, #5c6bc0, #1a237e)"
-            : "linear-gradient(135deg, #0d0d16, #111827)",
+            ? "linear-gradient(135deg, #10b981, #06b6d4)"
+            : "linear-gradient(135deg, #0a0e16, #0f172a)",
         display: "flex",
         justifyContent: "center",
         alignItems: "flex-start",
@@ -106,7 +106,7 @@ export default function Profile() {
           background:
             theme.palette.mode === "light"
               ? "rgba(255,255,255,0.85)"
-              : "rgba(30,30,46,0.55)",
+              : "rgba(18,24,38,0.65)",
           boxShadow:
             theme.palette.mode === "light"
               ? "0 10px 30px rgba(0,0,0,0.3)"
@@ -145,8 +145,8 @@ export default function Profile() {
                 px: 3,
                 background:
                   theme.palette.mode === "light"
-                    ? "linear-gradient(135deg, #1a237e, #303f9f)"
-                    : "linear-gradient(135deg, #4c51bf, #2a2f85)",
+                    ? "linear-gradient(135deg, #059669, #0891b2)"
+                    : "linear-gradient(135deg, #10b981, #06b6d4)",
               }}
             >
               Upload Image
@@ -244,8 +244,8 @@ export default function Profile() {
               fontWeight: "bold",
               background:
                 theme.palette.mode === "light"
-                  ? "linear-gradient(135deg, #1a237e, #303f9f)"
-                  : "linear-gradient(135deg, #4c51bf, #2a2f85)",
+                  ? "linear-gradient(135deg, #059669, #0891b2)"
+                  : "linear-gradient(135deg, #10b981, #06b6d4)",
             }}
             onClick={handleUpdate}
           >

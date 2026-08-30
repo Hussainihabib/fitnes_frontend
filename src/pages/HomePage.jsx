@@ -142,7 +142,7 @@ export default function HomePage() {
               variant="h5"
               sx={{
                 fontWeight: 900,
-                background: "linear-gradient(90deg,#4e54c8,#8f94fb)",
+                background: "linear-gradient(90deg,#10b981,#06b6d4)",
                 WebkitBackgroundClip: "text",
                 color: "transparent",
               }}
@@ -178,8 +178,8 @@ export default function HomePage() {
           justifyContent: "center",
           px: 3,
           background: isDark
-            ? "linear-gradient(135deg,#0f1720 10%, #1f2937 100%)"
-            : "linear-gradient(135deg,#eef2ff 0%, #f8fafc 100%)",
+            ? "linear-gradient(135deg,#0a0e16 10%, #121826 100%)"
+            : "linear-gradient(135deg,#ecfdf5 0%, #f8fafc 100%)",
           color: isDark ? "#fff" : "#08101a",
         }}
       >
@@ -203,7 +203,7 @@ export default function HomePage() {
                   px: 4,
                   py: 1.3,
                   fontWeight: "bold",
-                  background: "linear-gradient(90deg,#4e54c8,#8f94fb)",
+                  background: "linear-gradient(90deg,#10b981,#06b6d4)",
                 }}
               >
                 Create Account
@@ -302,7 +302,7 @@ export default function HomePage() {
         <Grid container spacing={3} maxWidth="lg" margin="0 auto">
           <Grid item xs={12} md={4}>
             <Card sx={{ p: 3 }}>
-              <FitnessCenterIcon sx={{ fontSize: 44, color: "#4e54c8" }} />
+              <FitnessCenterIcon sx={{ fontSize: 44, color: "#10b981" }} />
               <Typography variant="h6" fontWeight="bold" mt={1}>
                 Structured Workouts
               </Typography>
@@ -326,7 +326,7 @@ export default function HomePage() {
 
           <Grid item xs={12} md={4}>
             <Card sx={{ p: 3 }}>
-              <ShowChartIcon sx={{ fontSize: 44, color: "#4caf50" }} />
+              <ShowChartIcon sx={{ fontSize: 44, color: "#10b981" }} />
               <Typography variant="h6" fontWeight="bold" mt={1}>
                 Pro Analytics
               </Typography>
@@ -351,7 +351,7 @@ export default function HomePage() {
             pb: 1,
             px: 1,
             "&::-webkit-scrollbar": { height: 8 },
-            "&::-webkit-scrollbar-thumb": { background: isDark ? "#374151" : "#cbd5e1", borderRadius: 2 },
+            "&::-webkit-scrollbar-thumb": { background: isDark ? "#10b981" : "#10b981", borderRadius: 2 },
           }}
         >
           {exercises.map((ex, idx) => (
@@ -539,7 +539,7 @@ export default function HomePage() {
         sx={{
           py: 4,
           px: 3,
-          background: isDark ? "linear-gradient(90deg,#000,#07121a)" : "linear-gradient(90deg,#4e54c8,#8f94fb)",
+          background: isDark ? "linear-gradient(90deg,#04140f,#0a2e24)" : "linear-gradient(90deg,#10b981,#06b6d4)",
           color: "#fff",
           mt: 6,
         }}

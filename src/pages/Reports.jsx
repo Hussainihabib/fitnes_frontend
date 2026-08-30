@@ -20,21 +20,39 @@ import { useAuth } from "../context/AuthContext";
 import { exportCSV, exportPDF } from "../utils/export";
 import api from "../api/axios";
 
-// Analuticc card
+// Analytics card with a soft glowing icon tint, matching the dashboard's premium style
 const StatCard = ({ title, value, icon, color }) => (
   <Card
     sx={{
-      minHeight: 120,
+      minHeight: 130,
       display: "flex",
       alignItems: "center",
-      boxShadow: 6,
       borderRadius: 3,
-      transition: "transform 0.3s",
-      "&:hover": { transform: "translateY(-5px)" },
+      transition: "transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease",
+      "&:hover": {
+        transform: "translateY(-5px)",
+        borderColor: color,
+      },
     }}
   >
     <CardContent sx={{ flexGrow: 1, textAlign: "center" }}>
-      <Box sx={{ color: color, mb: 1 }}>{icon}</Box>
+      <Box
+        sx={{
+          width: 48,
+          height: 48,
+          borderRadius: "14px",
+          mx: "auto",
+          mb: 1.5,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: `${color}1f`,
+          boxShadow: `0 0 18px 2px ${color}26`,
+          color,
+        }}
+      >
+        {icon}
+      </Box>
       <Typography variant="h5" component="div" fontWeight="bold">
         {value}
       </Typography>

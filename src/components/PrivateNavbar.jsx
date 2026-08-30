@@ -27,7 +27,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { ColorModeContext } from "../context/ThemeContext";
+import { ColorModeContext, GRADIENT_PRIMARY, ACCENT } from "../context/ThemeContext";
 
 export default function PrivateNavbar() {
   const navigate = useNavigate();
@@ -37,7 +37,7 @@ export default function PrivateNavbar() {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [open, setOpen] = useState(false);
 
-  const textColor = mode === "dark" ? "#E5F6FC" : "#0D1B2A";
+  const textColor = mode === "dark" ? "#f1f5f9" : "#0f172a";
 
   const menuItems = [
     { text: "Dashboard", path: "/dashboard" },
@@ -51,7 +51,7 @@ export default function PrivateNavbar() {
 
   const glassColors = {
     light: "rgba(255,255,255,0.75)",
-    dark: "rgba(17,25,40,0.65)",
+    dark: "rgba(10,14,22,0.7)",
   };
 
   // Notification state
@@ -93,7 +93,8 @@ export default function PrivateNavbar() {
           borderRadius: "0 0 20px 20px",
           backdropFilter: "blur(20px)",
           background: glassColors[mode],
-          boxShadow: "0px 0px 8px rgba(94, 103, 235, 0.4)",
+          borderBottom: `1px solid ${mode === "dark" ? "rgba(16,185,129,0.15)" : "rgba(16,185,129,0.2)"}`,
+          boxShadow: "0px 4px 24px rgba(16, 185, 129, 0.12)",
           transition: "0.3s",
         }}
       >
@@ -112,7 +113,7 @@ export default function PrivateNavbar() {
               flexGrow: 1,
               fontSize: "18px",
               cursor: "pointer",
-              background: "linear-gradient(45deg,#6670ff,#5dd6ff)",
+              background: GRADIENT_PRIMARY,
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
             }}
@@ -134,7 +135,8 @@ export default function PrivateNavbar() {
                   borderRadius: "12px",
                   px: 1.5,
                   "&:hover": {
-                    background: "rgba(255,255,255,0.15)",
+                    background: "rgba(16,185,129,0.14)",
+                    color: ACCENT,
                   },
                 }}
               >
@@ -169,16 +171,17 @@ export default function PrivateNavbar() {
           </IconButton>
 
           <Button
-            variant="contained"
+            variant="outlined"
             onClick={logout}
             sx={{
               textTransform: "none",
               fontSize: "14px",
               borderRadius: "12px",
-              background: "linear-gradient(45deg,#5e67eb,#5dd6ff)",
-              color: "#fff",
+              borderColor: "rgba(244,63,94,0.4)",
+              color: "#fb7185",
               "&:hover": {
-                background: "linear-gradient(45deg,#5161e0,#4ac2ef)",
+                borderColor: "#fb7185",
+                background: "rgba(244,63,94,0.12)",
               },
             }}
           >
@@ -239,7 +242,7 @@ export default function PrivateNavbar() {
                 mx: 1,
                 mt: 2,
                 borderRadius: "10px",
-                color: "#FF4D4D",
+                color: "#fb7185",
               }}
             >
               <ListItemText primary="Logout" />

@@ -462,6 +462,34 @@ export default function Workouts() {
     </TableHead>
 
     <TableBody>
+      {filteredWorkouts.length === 0 && (
+        <TableRow>
+          <TableCell colSpan={5} align="center" sx={{ py: 8, border: 0 }}>
+            <Box
+              sx={{
+                width: 64,
+                height: 64,
+                borderRadius: "50%",
+                mx: "auto",
+                mb: 2,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: alpha(theme.palette.primary.main, 0.12),
+                boxShadow: `0 0 24px 4px ${alpha(theme.palette.primary.main, 0.15)}`,
+              }}
+            >
+              <FitnessCenterIcon sx={{ fontSize: 28, color: theme.palette.primary.main }} />
+            </Box>
+            <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
+              No workouts found
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Try adjusting your filters, or log a new session to get started.
+            </Typography>
+          </TableCell>
+        </TableRow>
+      )}
       {filteredWorkouts.map((w) => (
         <TableRow
           key={w._id}
@@ -473,7 +501,13 @@ export default function Workouts() {
           <TableCell component="th" scope="row">
             <Typography fontWeight="bold">{w.title}</Typography>
           </TableCell>
-          <TableCell>{w.category}</TableCell>
+          <TableCell>
+            {w.category ? (
+              <Chip label={w.category} size="small" color="primary" />
+            ) : (
+              <Typography variant="body2" color="text.secondary">—</Typography>
+            )}
+          </TableCell>
           <TableCell>
             {(w.tags || []).map((t, i) => (
               <Chip

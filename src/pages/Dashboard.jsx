@@ -20,6 +20,7 @@ import {
   Tooltip,
   Stack,
   Divider,
+  Chip,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import BarChartIcon from "@mui/icons-material/BarChart";
@@ -30,6 +31,17 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import api from "../api/axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import {
+  GRADIENT_PRIMARY,
+  GRADIENT_ENERGY,
+  GRADIENT_INFO,
+  ACCENT,
+  ACCENT_SOFT,
+  CYAN,
+  CYAN_SOFT,
+  AMBER,
+  AMBER_SOFT,
+} from "../context/ThemeContext";
 
 
 
@@ -45,9 +57,9 @@ export default function Dashboard() {
 
   const base = api.defaults.baseURL ? api.defaults.baseURL.replace(/\/api$/, "") : "";
 
-  const primaryGradient = "linear-gradient(135deg, #4e54c8 0%, #8f94fb 100%)"; // Blue/Violet
-  const secondaryGradient = "linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%)"; // Pink/Orange
-  const infoGradient = "linear-gradient(135deg, #2af598 0%, #009efd 100%)"; // Green/Blue
+  const primaryGradient = GRADIENT_PRIMARY; // Neon green / cyan
+  const secondaryGradient = GRADIENT_ENERGY; // Amber / rose (calories & energy)
+  const infoGradient = GRADIENT_INFO; // Cyan / blue (progress)
 
   const glassBackground = isDark ? "rgba(255,255,255,0.03)" : "rgba(255,255,255,0.85)";
   const panelShadow = isDark ? "0 10px 30px rgba(0,0,0,0.6)" : "0 10px 30px rgba(14,30,60,0.06)";
@@ -143,52 +155,89 @@ export default function Dashboard() {
         onClick={onClick}
         sx={{
           p: 2.5,
-          borderRadius: 3,
-          background: gradient,
-          color: "#fff",
+          borderRadius: 4,
+          border: "1px solid rgba(255,255,255,0.08)",
+          background: isDark
+            ? "linear-gradient(160deg, #121826 0%, #0e1420 100%)"
+            : "#ffffff",
+          color: isDark ? "#f1f5f9" : "#0f172a",
           cursor: onClick ? "pointer" : "default",
           position: "relative",
           overflow: "hidden",
-          minHeight: 170,
+          minHeight: 176,
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          boxShadow: "0 8px 24px rgba(0,0,0,0.18)",
-          transition: "transform .25s, box-shadow .25s",
+          boxShadow: isDark ? "0 8px 24px rgba(0,0,0,0.35)" : "0 8px 24px rgba(15,23,42,0.08)",
+          transition: "transform .25s, box-shadow .25s, border-color .25s",
           "&:hover": {
             transform: onClick ? "translateY(-6px)" : "none",
-            boxShadow: "0 18px 48px rgba(0,0,0,0.28)",
+            boxShadow: isDark ? "0 18px 48px rgba(0,0,0,0.45)" : "0 18px 40px rgba(15,23,42,0.14)",
+            borderColor: "rgba(16,185,129,0.35)",
           },
         }}
       >
-        <Box sx={{ position: "absolute", right: -10, top: -10, opacity: 0.12 }}>
-          {Icon ? <Icon sx={{ fontSize: 110 }} /> : null}
-        </Box>
+        {/* Ambient glow tint in the corner */}
+        <Box
+          sx={{
+            position: "absolute",
+            right: -30,
+            top: -30,
+            width: 140,
+            height: 140,
+            borderRadius: "50%",
+            background: gradient,
+            opacity: isDark ? 0.16 : 0.1,
+            filter: "blur(18px)",
+          }}
+        />
 
-        <Box>
-          <Typography variant="subtitle2" sx={{ opacity: 0.95, fontWeight: 700 }}>
-            {title}
-          </Typography>
-          <Box sx={{ display: "flex", alignItems: "baseline", gap: 1, mt: 1 }}>
-            <Typography variant="h4" sx={{ fontWeight: 900, lineHeight: 1 }}>
-              {value}
+        <Box sx={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between" }}>
+          <Box>
+            <Typography variant="subtitle2" sx={{ opacity: 0.75, fontWeight: 700 }}>
+              {title}
             </Typography>
-            {unit ? (
-              <Typography variant="body2" sx={{ opacity: 0.9, fontWeight: 600 }}>
-                {unit}
+            <Box sx={{ display: "flex", alignItems: "baseline", gap: 1, mt: 1 }}>
+              <Typography variant="h4" sx={{ fontWeight: 900, lineHeight: 1 }}>
+                {value}
               </Typography>
-            ) : null}
+              {unit ? (
+                <Typography variant="body2" sx={{ opacity: 0.6, fontWeight: 600 }}>
+                  {unit}
+                </Typography>
+              ) : null}
+            </Box>
+            <Typography variant="caption" sx={{ opacity: 0.6 }}>
+              {subtitle}
+            </Typography>
           </Box>
-          <Typography variant="caption" sx={{ opacity: 0.9 }}>
-            {subtitle}
-          </Typography>
+
+          {/* Micro-icon with soft glowing tint background */}
+          {Icon ? (
+            <Box
+              sx={{
+                width: 46,
+                height: 46,
+                borderRadius: "14px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: gradient,
+                boxShadow: `0 0 22px 2px rgba(16,185,129,0.25)`,
+                flexShrink: 0,
+                zIndex: 1,
+              }}
+            >
+              <Icon sx={{ fontSize: 22, color: "#04140f" }} />
+            </Box>
+          ) : null}
         </Box>
 
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mt: 2 }}>
           <Box sx={{ width: 140, height: 40 }}>
             {sparkData && sparkData.length > 0 ? (
               <svg width="100%" height="100%" viewBox={`0 0 120 36`} preserveAspectRatio="none">
-                <path d={makeSparklinePath(sparkData, 120, 36)} fill="none" stroke="rgba(255,255,255,0.9)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d={makeSparklinePath(sparkData, 120, 36)} fill="none" stroke={ACCENT} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             ) : null}
           </Box>
@@ -197,13 +246,18 @@ export default function Dashboard() {
             size="small"
             endIcon={<ArrowForwardIcon />}
             sx={{
-              color: "#fff",
-              background: "rgba(255,255,255,0.06)",
+              color: isDark ? "#f1f5f9" : "#0f172a",
+              background: isDark ? "rgba(255,255,255,0.05)" : "rgba(15,23,42,0.04)",
               px: 2,
               py: 0.6,
               textTransform: "none",
               borderRadius: 2,
-              "&:hover": { background: "rgba(255,255,255,0.08)" },
+              boxShadow: "none",
+              "&:hover": {
+                background: ACCENT_SOFT,
+                color: ACCENT,
+                boxShadow: "none",
+              },
             }}
             disableRipple
           >
@@ -344,12 +398,31 @@ export default function Dashboard() {
           >
             {workouts.length === 0 ? (
               <Box sx={{ py: 8, textAlign: "center" }}>
-                <Typography color="text.secondary" variant="h6">
-                  No workouts yet — start logging your first session.
+                <Box
+                  sx={{
+                    width: 72,
+                    height: 72,
+                    borderRadius: "50%",
+                    mx: "auto",
+                    mb: 2.5,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    background: ACCENT_SOFT,
+                    boxShadow: `0 0 30px 4px rgba(16,185,129,0.15)`,
+                  }}
+                >
+                  <FitnessCenterIcon sx={{ fontSize: 32, color: ACCENT }} />
+                </Box>
+                <Typography color="text.primary" variant="h6" sx={{ fontWeight: 700 }}>
+                  No workouts yet
+                </Typography>
+                <Typography color="text.secondary" variant="body2" sx={{ mt: 0.5 }}>
+                  Start logging your first session to see it appear here.
                 </Typography>
                 <Button
                   variant="contained"
-                  sx={{ mt: 3, background: primaryGradient, textTransform: "none" }}
+                  sx={{ mt: 3, textTransform: "none" }}
                   onClick={() => navigate("/workouts")}
                 >
                   Add New Workout
@@ -395,9 +468,13 @@ export default function Dashboard() {
                             </TableCell>
 
                             <TableCell>
-                              <Typography variant="body2" color="text.primary">
-                                {w.category}
-                              </Typography>
+                              {w.category ? (
+                                <Chip label={w.category} size="small" color="primary" />
+                              ) : (
+                                <Typography variant="body2" color="text.secondary">
+                                  —
+                                </Typography>
+                              )}
                             </TableCell>
 
                             <TableCell sx={{ minWidth: 200 }}>
